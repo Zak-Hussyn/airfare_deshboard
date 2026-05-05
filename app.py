@@ -25,7 +25,7 @@ st.caption("*Built using Machine Learning & Streamlit")
 st.subheader("ENTER FLIGHT DETAILS")
 col1, col2 = st.columns(2)
 with col1:
-    #input_airline = st.selectbox("Airline", df["Airline"].unique())
+    input_airline = st.selectbox("Airline", df["Airline"].unique())
     input_stops = st.selectbox("Stopover", df["Stopovers"].unique())
     #input_aircraft = st.selectbox("Aircraft Type", df["Aircraft Type"].unique())
     input_class = st.selectbox("Class", df["Class"].unique())
@@ -39,6 +39,10 @@ with col2:
     #input_ddt = st.selectbox("Departure Date & Time", df["Departure Date & Time"].unique())
 
 from sklearn.preprocessing import LabelEncoder
+le_airline = LabelEncoder()
+le_airline.fit(df['Airline'])
+encoded_stops = le_airline.transform([input_airline])[0]
+
 le_stops = LabelEncoder()
 le_stops.fit(df['Stopovers'])
 encoded_stops = le_stops.transform([input_stops])[0]
@@ -53,7 +57,7 @@ encoded_season = le_season.transform([input_season])[0]
 
 if st.button("Predict Fare"):
     test_input = [[
-        0, #encoded_airline
+        encoded_airline,
         input_duration,
         encoded_stops,
         0, #encoded_aircraft,
