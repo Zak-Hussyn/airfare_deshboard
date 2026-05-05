@@ -41,7 +41,7 @@ with col2:
 from sklearn.preprocessing import LabelEncoder
 le_airline = LabelEncoder()
 le_airline.fit(df['Airline'])
-encoded_stops = le_airline.transform([input_airline])[0]
+encoded_airline = le_airline.transform([input_airline])[0]
 
 le_stops = LabelEncoder()
 le_stops.fit(df['Stopovers'])
